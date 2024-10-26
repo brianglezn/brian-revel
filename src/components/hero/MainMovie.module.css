@@ -1,6 +1,6 @@
 .container {
     height: 100vh;
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
@@ -8,12 +8,8 @@
     align-items: center;
 }
 
-.animateBackgroundImage {
-    animation: scaleBackground 7s ease-in-out;
-}
-
 .overlay {
-    background-color: rgba(0, 0, 0, 0.65);
+    background-color: rgba(0, 0, 0, 0.7);
     height: 100%;
     width: 100%;
     display: flex;
@@ -69,17 +65,5 @@
 
     .description {
         font-size: 1rem;
-    }
-}
-
-@keyframes scaleBackground {
-    0% {
-        background-size: 100%;
-        background-position: center center;
-    }
-
-    100% {
-        background-size: 110%;
-        background-position: center center;
     }
 }
