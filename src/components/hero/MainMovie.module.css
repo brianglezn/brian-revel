@@ -8,20 +8,8 @@
     align-items: center;
 }
 
-.animate {
+.animateBackgroundImage {
     animation: scaleBackground 7s ease-in-out;
-}
-
-@keyframes scaleBackground {
-    0% {
-        background-size: 100%;
-        background-position: center center;
-    }
-
-    100% {
-        background-size: 110%;
-        background-position: center center;
-    }
 }
 
 .overlay {
@@ -81,5 +69,17 @@
 
     .description {
         font-size: 1rem;
+    }
+}
+
+@keyframes scaleBackground {
+    0% {
+        background-size: 100%;
+        background-position: center center;
+    }
+
+    100% {
+        background-size: 110%;
+        background-position: center center;
     }
 }

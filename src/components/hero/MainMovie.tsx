@@ -53,7 +53,7 @@ export default function MainMovie() {
     return (
         <div
             key={animationKey}
-            className={`${styles.container} ${styles.animate}`}
+            className={`${styles.container} ${styles.animateBackgroundImage}`}
             style={{ backgroundImage: `url(${currentMovie.poster})` }}
         >
             <div className={styles.overlay}>
