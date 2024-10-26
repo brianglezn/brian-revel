@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import Avatar from '@/components/avatar/Avatar';
+import Avatar from '@/components/user/Avatar';
 import styles from './page.module.css';
+import MainMovie from '@/components/hero/MainMovie';
 
 export default async function Home() {
   const cookieStore = cookies();
@@ -16,7 +17,9 @@ export default async function Home() {
       <header className={styles.header}>
         <Avatar alt="User Avatar" size="small" />
       </header>
-      <section className={styles.hero}></section>
+      <section className={styles.hero}>
+        <MainMovie />
+      </section>
       <section className={styles.categories}></section>
       <section className={styles.soon}></section>
       <section className={styles.list}></section>
