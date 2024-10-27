@@ -1,0 +1,60 @@
+.posterContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 350px;
+  height: 200px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background-color: #222;
+  transition: transform 0.3s ease;
+}
+
+.posterContainer:hover {
+  cursor: pointer;
+}
+
+.posterContainer .imageContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border-radius);
+  transition: background-color 0.5s ease;
+}
+
+.posterContainer .imageContainer .posterImage {
+  border-radius: var(--border-radius);
+}
+
+.posterContainer .imageContainer .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.posterContainer:hover .imageContainer .overlay {
+  opacity: 1;
+}
+
+.posterContainer .imageContainer .overlay .title {
+  color: var(--text-color-white);
+  font-size: 1.2rem;
+  margin: 0 1rem 10px;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.posterContainer .imageContainer .overlay .availableDate {
+  color: #b5b5b5;
+  font-size: 1rem;
+  margin-top: 5px;
+}

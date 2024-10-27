@@ -6,6 +6,8 @@ export interface Movie {
     thumbnail: string;
     highlighted: boolean;
     rating: number | null;
+    availableDate: string;
+    genre: string;
 }
 
 export interface MovieThumbnail {
@@ -19,5 +21,10 @@ export interface MoviePoster {
     id: string;
     title: string;
     poster: string;
-    rating: number | null;
+    availableDate?: string
+}
+
+export interface Genre {
+    id: string;
+    name: string;
 }

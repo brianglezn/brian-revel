@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useState } from 'react';
+import Image from 'next/image';
 import styles from './Thumbnail.module.css';
 import StarRateIcon from '@/components/icons/StarRateIcon';
 import StarRateFilledIcon from '@/components/icons/StarRateFilledIcon';

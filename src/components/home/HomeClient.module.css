@@ -96,6 +96,8 @@
     }
 }
 
+/* LIST */
+
 /* GENRES */
 
 .genres {
@@ -125,7 +127,30 @@
 
 /* SOON */
 
-/* LIST */
+.soon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.soon .soonContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+}
+
+.soon .soonContainer .soonMovies {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .soon .soonContainer {
+        width: 100%;
+    }
+}
 
 /* FOOTER */
 
