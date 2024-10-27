@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './HomeGenres.module.css';
 import { Genre, Movie } from '@/app/types';
 import Carousel from '@/components/ui/Carousel';

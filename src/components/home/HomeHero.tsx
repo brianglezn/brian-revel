@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './HomeHero.module.css';
 import MainIndicator from '@/components/ui/MainIndicator';
 import { Movie } from '@/app/types';

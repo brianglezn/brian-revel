@@ -116,6 +116,8 @@ export default function HomeClient() {
 
       <HomeSoon upcomingMovies={upcomingMovies} />
 
+      <section className={styles.homeList}></section>
+
       <HomeFooter />
 
       <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarToggle}>

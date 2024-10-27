@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './HomeSoon.module.css';
 import Carousel from '@/components/ui/Carousel';
 import Poster from '@/components/ui/Poster';

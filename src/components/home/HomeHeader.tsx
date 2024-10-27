@@ -1,5 +1,3 @@
-'use client';
-
 import Avatar from '@/components/ui/Avatar';
 import styles from './HomeHeader.module.css';
 

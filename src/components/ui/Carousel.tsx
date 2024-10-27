@@ -16,11 +16,15 @@ export default function Carousel({ children }: CarouselProps) {
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
+    const [startY, setStartY] = useState(0);
+    const [isScrollingHorizontally, setIsScrollingHorizontally] = useState(false);
 
     const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
         setIsDragging(true);
         const startXValue = e.type === 'mousedown' ? (e as React.MouseEvent).pageX : (e as React.TouchEvent).touches[0].pageX;
+        const startYValue = e.type === 'mousedown' ? (e as React.MouseEvent).pageY : (e as React.TouchEvent).touches[0].pageY;
         setStartX(startXValue);
+        setStartY(startYValue);
         setScrollLeft(carouselRef.current!.scrollLeft);
     };
 
@@ -28,12 +32,21 @@ export default function Carousel({ children }: CarouselProps) {
         if (!isDragging) return;
         e.preventDefault();
         const currentX = e.type === 'mousemove' ? (e as React.MouseEvent).pageX : (e as React.TouchEvent).touches[0].pageX;
-        const distance = currentX - startX;
-        carouselRef.current!.scrollLeft = scrollLeft - distance;
+        const currentY = e.type === 'mousemove' ? (e as React.MouseEvent).pageY : (e as React.TouchEvent).touches[0].pageY;
+        const distanceX = currentX - startX;
+        const distanceY = currentY - startY;
+
+        if (Math.abs(distanceX) > Math.abs(distanceY)) {
+            setIsScrollingHorizontally(true);
+            carouselRef.current!.scrollLeft = scrollLeft - distanceX;
+        } else {
+            setIsScrollingHorizontally(false);
+        }
     };
 
     const handleMouseUp = () => {
         setIsDragging(false);
+        setIsScrollingHorizontally(false);
     };
 
     const handleScrollLeft = () => {
@@ -91,6 +104,9 @@ export default function Carousel({ children }: CarouselProps) {
             onTouchStart={handleMouseDown}
             onTouchMove={handleMouseMove}
             onTouchEnd={handleMouseUp}
+            onTouchMoveCapture={(e) => {
+                if (isScrollingHorizontally) e.preventDefault();
+            }}
         >
             {!isAtStart && (
                 <button className={`${styles.scrollButton} ${styles.leftButton}`} onClick={handleScrollLeft}>
