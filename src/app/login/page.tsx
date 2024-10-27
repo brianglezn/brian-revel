@@ -32,7 +32,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={styles.loginContainer}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>Sign In</h1>
                 <input
