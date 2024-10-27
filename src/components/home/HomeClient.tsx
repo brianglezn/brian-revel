@@ -6,7 +6,9 @@ import styles from './HomeClient.module.css';
 import { Movie } from '@/app/types';
 import Avatar from '@/components/ui/Avatar';
 import Sidebar from '@/components/ui/Sidebar';
+import Carousel from '@/components/ui/Carousel';
 import MainIndicator from '@/components/ui/MainIndicator';
+import Thumbnail from '@/components/ui/Thumbnail';
 import UserIcon from '@/components/icons/UserIcon';
 import SecurityIcon from '@/components/icons/SecurityIcon';
 import HelpIcon from '@/components/icons/HelpIcon';
@@ -65,9 +67,9 @@ export default function HomeClient() {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.homeContainer}>
       <header className={styles.header}>
-        <Avatar alt="User Avatar" size="small" onClick={handleSidebarToggle} />
+        <Avatar alt='User Avatar' size='small' onClick={handleSidebarToggle} />
       </header>
 
       {movies.length > 0 && (
@@ -92,6 +94,34 @@ export default function HomeClient() {
           />
         </section>
       )}
+
+      <section className={styles.genres}>
+
+        <div className={styles.genre}>
+          <h2>Genre1</h2>
+          <div className={styles.genreMovies}>
+            <Carousel>
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+              <Thumbnail thumbnail='/prueba_thumbnail_MInc.jpeg' title='Monsters Inc' rating={3.5} id={''} />
+            </Carousel>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.soon}></section>
+
+      <section className={styles.list}></section>
+
+      <footer className={styles.footer}></footer>
 
       <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarToggle}>
         <div className={styles.sidebarContent}>

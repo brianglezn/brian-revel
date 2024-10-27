@@ -1,0 +1,62 @@
+.thumbnail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 200px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    background-color: #222;
+}
+
+.thumbnail:hover {
+    cursor: pointer;
+}
+
+.thumbnail .imageContainer {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.5s ease;
+}
+
+
+.thumbnail .imageContainer .image {
+    border-radius: var(--border-radius);
+}
+
+.thumbnail .imageContainer .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail:hover .imageContainer .overlay {
+    opacity: 1;
+}
+
+.thumbnail .imageContainer .overlay .title {
+    color: #fff;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.thumbnail .imageContainer .overlay .rating {
+    display: flex;
+    gap: 5px;
+}
+
+.thumbnail .imageContainer .overlay .rating svg {
+    fill: #cfcf06;
+    width: 1.5rem;
+    height: 1.5rem;
+}

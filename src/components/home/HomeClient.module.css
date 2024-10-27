@@ -1,6 +1,9 @@
-.container {
+.homeContainer {
     background-color: var(--background);
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
 /* HEADER */
@@ -93,7 +96,32 @@
     }
 }
 
-/* CATEGORIES */
+/* GENRES */
+
+.genres {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.genres .genre {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+}
+
+.genres .genre .genreMovies {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .genres .genre {
+        width: 100%;
+    }
+}
 
 /* SOON */
 

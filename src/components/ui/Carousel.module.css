@@ -1,0 +1,61 @@
+.carousel {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+}
+
+.carousel .carouselContainer {
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    transition: all 0.5s ease;
+}
+
+.carousel .carouselContent {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.carousel .scrollButton {
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    border: none;
+    font-size: 2rem;
+    border-radius: 0;
+    padding: 0.5rem;
+    fill: white;
+    background-color: rgba(0, 0, 0, 0.3);
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.carousel .scrollButton svg {
+    fill: white;
+    width: 2rem;
+    height: 2rem;
+}
+
+.carousel .leftButton {
+    box-shadow: 20px 0px 20px rgba(0, 0, 0, 0.3);
+    left: 0;
+}
+
+.carousel .rightButton {
+    box-shadow: -20px 0px 10px rgba(0, 0, 0, 0.3);
+    right: 0;
+}
+
+.carousel .leftButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: 20px 0px 20px 6px rgba(0, 0, 0, 0.5);
+}
+
+.carousel .rightButton:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    box-shadow: -20px 0px 20px 6px rgba(0, 0, 0, 0.5);
+}
