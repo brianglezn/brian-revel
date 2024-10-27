@@ -6,11 +6,11 @@ import { useRouter } from 'next/navigation';
 import styles from './HomeClient.module.css';
 
 import { Movie, Genre } from '@/app/types';
-import HomeHeader from '@/components/home/HomeHeader';
-import HomeHero from '@/components/home/HomeHero';
-import HomeGenres from '@/components/home/HomeGenres';
-import HomeSoon from '@/components/home/HomeSoon';
-import HomeFooter from '@/components/home/HomeFooter';
+import Header from '@/components/layout/Header';
+import HomeHero from '@/app/_home/HomeHero';
+import HomeGenres from '@/app/_home/HomeGenres';
+import HomeSoon from '@/app/_home/HomeSoon';
+import Footer from '@/components/layout/Footer';
 import Sidebar from '@/components/ui/Sidebar';
 import UserIcon from '@/components/icons/UserIcon';
 import SecurityIcon from '@/components/icons/SecurityIcon';
@@ -93,7 +93,7 @@ export default function HomeClient() {
   return (
     <div className={styles.homeContainer}>
 
-      <HomeHeader handleSidebarToggle={handleSidebarToggle} />
+      <Header handleSidebarToggle={handleSidebarToggle} />
 
       {highlightedMovies.length > 0 && (
         <HomeHero
@@ -118,7 +118,7 @@ export default function HomeClient() {
 
       <section className={styles.homeList}></section>
 
-      <HomeFooter />
+      <Footer />
 
       <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarToggle}>
         <div className={styles.sidebarContent}>

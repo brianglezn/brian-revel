@@ -2,17 +2,26 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './Poster.module.css';
 import { MoviePoster } from '@/app/types';
+import { slugify } from '@/utils/slugify';
 
-export default function Poster({ poster, title, availableDate }: MoviePoster) {
+export default function Poster({ poster, title, availableDate, id }: MoviePoster) {
     const [hovered, setHovered] = useState(false);
+    const router = useRouter();
+
+    const handleClick = () => {
+        const slug = slugify(title);
+        router.push(`/movies/${slug}?id=${id}`);
+    };
 
     return (
         <div
             className={styles.posterContainer}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onClick={handleClick}
         >
             <div className={styles.imageContainer}>
                 <Image

@@ -1,0 +1,38 @@
+.hero {
+    position: relative;
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+.hero .heroImage {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.hero .heroImage .overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 2rem;
+    width: 100%;
+}
+
+.hero .heroImage .overlay .actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.hero .heroImage .overlay .actions .trailerButton {
+    background-color: white;
+    color: black;
+    padding: 0.5rem 1rem;
+}
+
+.hero .heroImage .overlay .actions .playButton {
+    background-color: purple;
+    color: white;
+    padding: 0.5rem 1rem;
+}

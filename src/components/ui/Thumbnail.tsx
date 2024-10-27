@@ -2,14 +2,22 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from './Thumbnail.module.css';
 import StarRateIcon from '@/components/icons/StarRateIcon';
 import StarRateFilledIcon from '@/components/icons/StarRateFilledIcon';
 import StarRateHalfIcon from '@/components/icons/StarRateHalfIcon';
 import { MovieThumbnail } from '@/app/types';
+import { slugify } from '@/utils/slugify';
 
-export default function Thumbnail({ thumbnail, title, rating }: MovieThumbnail) {
+export default function Thumbnail({ thumbnail, title, rating, id }: MovieThumbnail) {
     const [hovered, setHovered] = useState(false);
+    const router = useRouter();
+
+    const handleClick = () => {
+        const slug = slugify(title);
+        router.push(`/movies/${slug}?id=${id}`);
+    };
 
     const renderStars = (rating: number | null) => {
         const stars = [];
@@ -32,6 +40,7 @@ export default function Thumbnail({ thumbnail, title, rating }: MovieThumbnail) 
             className={styles.thumbnail}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
+            onClick={handleClick} // Redirige usando el slug del título
         >
             <div className={styles.imageContainer}>
                 <Image
