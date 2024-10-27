@@ -2,18 +2,20 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
 import styles from './HomeClient.module.css';
+
 import { Movie, Genre } from '@/app/types';
-import Avatar from '@/components/ui/Avatar';
+import HomeHeader from '@/components/home/HomeHeader';
+import HomeHero from '@/components/home/HomeHero';
+import HomeGenres from '@/components/home/HomeGenres';
+import HomeSoon from '@/components/home/HomeSoon';
+import HomeFooter from '@/components/home/HomeFooter';
 import Sidebar from '@/components/ui/Sidebar';
-import Carousel from '@/components/ui/Carousel';
-import MainIndicator from '@/components/ui/MainIndicator';
-import Thumbnail from '@/components/ui/Thumbnail';
 import UserIcon from '@/components/icons/UserIcon';
 import SecurityIcon from '@/components/icons/SecurityIcon';
 import HelpIcon from '@/components/icons/HelpIcon';
 import InfoIcon from '@/components/icons/InfoIcon';
-import Poster from '../ui/Poster';
 
 export default function HomeClient() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -22,6 +24,8 @@ export default function HomeClient() {
   const [highlightedMovies, setHighlightedMovies] = useState<Movie[]>([]);
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+
   const router = useRouter();
 
   const handleSidebarToggle = () => {
@@ -69,13 +73,6 @@ export default function HomeClient() {
 
   const currentMovie = highlightedMovies[currentMovieIndex];
 
-  const truncateDescription = (description: string, maxLength: number) => {
-    if (description.length > maxLength) {
-      return description.slice(0, maxLength) + '...';
-    }
-    return description;
-  };
-
   const genreMap = genres.reduce((acc, genre) => {
     acc[genre.id] = genre.name;
     return acc;
@@ -83,88 +80,43 @@ export default function HomeClient() {
 
   const currentDate = new Date();
 
-  const availableMovies = movies.reduce((acc, movie) => {
-    const availableDate = new Date(movie.availableDate);
-    if (availableDate <= currentDate) {
-      const genreName = genreMap[movie.genre] || 'Unknown';
-      if (!acc[genreName]) {
-        acc[genreName] = [];
-      }
-      acc[genreName].push(movie);
-    }
-    return acc;
-  }, {} as Record<string, Movie[]>);
+  const availableMovies = movies.filter(
+    (movie) =>
+      (!selectedGenre || movie.genre === selectedGenre) &&
+      new Date(movie.availableDate) <= currentDate
+  );
 
-  const upcomingMovies = movies.filter(movie => new Date(movie.availableDate) > currentDate);
+  const upcomingMovies = movies.filter(
+    (movie) => new Date(movie.availableDate) > currentDate && (!selectedGenre || movie.genre === selectedGenre)
+  );
 
   return (
     <div className={styles.homeContainer}>
-      <header className={styles.header}>
-        <Avatar alt='User Avatar' size='small' onClick={handleSidebarToggle} />
-      </header>
+
+      <HomeHeader handleSidebarToggle={handleSidebarToggle} />
 
       {highlightedMovies.length > 0 && (
-        <section
+        <HomeHero
           key={animationKey}
-          className={styles.hero}
-          style={{ backgroundImage: `url(${currentMovie?.poster})` }}
-        >
-          <div className={styles.overlay}>
-            <div className={styles.textContainer}>
-              <h1 className={styles.title}>{currentMovie?.title}</h1>
-              <p className={styles.description}>
-                {truncateDescription(currentMovie?.description || '', 150)}
-              </p>
-              <button className={styles.button}>Discover</button>
-            </div>
-          </div>
-          <MainIndicator
-            total={highlightedMovies.length}
-            currentIndex={currentMovieIndex}
-            onIndicatorClick={(index) => setCurrentMovieIndex(index)}
-          />
-        </section>
+          currentMovie={currentMovie}
+          currentMovieIndex={currentMovieIndex}
+          highlightedMoviesLength={highlightedMovies.length}
+          onIndicatorClick={(index) => setCurrentMovieIndex(index)}
+        />
+
       )}
 
-      <section className={styles.genres}>
-        {Object.entries(availableMovies).map(([genreName, genreMovies]) => (
-          <div key={genreName} className={styles.genre}>
-            <h2>{genreName}</h2>
-            <Carousel>
-              {genreMovies.map(movie => (
-                <Thumbnail
-                  key={movie.id}
-                  thumbnail={movie.thumbnail}
-                  title={movie.title}
-                  rating={movie.rating}
-                  id={movie.id}
-                />
-              ))}
-            </Carousel>
-          </div>
-        ))}
-      </section>
+      <HomeGenres
+        genres={genres}
+        availableMovies={availableMovies}
+        selectedGenre={selectedGenre}
+        onSelectGenre={setSelectedGenre}
+        genreMap={genreMap}
+      />
 
-      <section className={styles.soon}>
-        <div className={styles.soonContainer}>
-          <h2>Coming Soon</h2>
-          <Carousel>
-            {upcomingMovies.map(movie => (
-              <Poster
-                key={movie.id}
-                poster={movie.poster}
-                title={movie.title}
-                id={movie.id}
-                availableDate={movie.availableDate}
-              />
-            ))}
-          </Carousel>
-        </div>
-      </section>
+      <HomeSoon upcomingMovies={upcomingMovies} />
 
-      <section className={styles.list}></section>
-
-      <footer className={styles.footer}></footer>
+      <HomeFooter />
 
       <Sidebar isOpen={isSidebarOpen} onClose={handleSidebarToggle}>
         <div className={styles.sidebarContent}>

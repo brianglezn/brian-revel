@@ -15,7 +15,6 @@ export default function Poster({ poster, title, availableDate }: MoviePoster) {
             onMouseLeave={() => setHovered(false)}
         >
             <div className={styles.imageContainer}>
-                <p>HOLA</p>
                 <Image
                     src={poster}
                     alt={title}

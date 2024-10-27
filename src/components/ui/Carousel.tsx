@@ -73,6 +73,14 @@ export default function Carousel({ children }: CarouselProps) {
         };
     }, []);
 
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            checkScrollPosition();
+        }, 100);
+
+        return () => clearTimeout(timeoutId);
+    }, [children]);
+
     return (
         <div
             className={styles.carousel}
