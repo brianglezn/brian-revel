@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header';
 import HomeHero from '@/app/_home/HomeHero';
 import HomeGenres from '@/app/_home/HomeGenres';
 import HomeSoon from '@/app/_home/HomeSoon';
+import HomeList from '@/app/_home/HomeList';
 import Footer from '@/components/layout/Footer';
 
 export default function Home() {
@@ -100,7 +101,7 @@ export default function Home() {
 
       <HomeSoon upcomingMovies={upcomingMovies} />
 
-      <section className={styles.homeList}></section>
+      <HomeList />
 
       <Footer />
     </div>

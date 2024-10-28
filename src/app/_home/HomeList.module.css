@@ -1,0 +1,24 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.list .listContainer {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+    .list .listContainer {
+        width: 100%;
+    }
+}
