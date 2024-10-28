@@ -33,8 +33,9 @@ export default function MoviePage() {
         const genresData = await genresRes.json();
         const userData = await userRes.json();
 
-        const trailerUrl = '';
-        const playUrl = movieData.availableDate <= new Date().toISOString() ? '' : null;
+        // Simula las URLs
+        const trailerUrl = 'https://example.com/trailer';
+        const playUrl = movieData.availableDate <= new Date().toISOString() ? 'https://example.com/play' : null;
 
         setMovieDetails({ ...movieData, trailerUrl, playUrl });
         setGenres(genresData);
