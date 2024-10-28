@@ -10,17 +10,12 @@ import Footer from '@/components/layout/Footer';
 import { Genre, Movie } from '@/app/types';
 
 export default function MoviePage() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const searchParams = useSearchParams();
   const movieId = searchParams.get('id');
-
-  const handleSidebarToggle = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
 
   useEffect(() => {
     const fetchMovieAndGenres = async () => {
@@ -38,9 +33,8 @@ export default function MoviePage() {
         const genresData = await genresRes.json();
         const userData = await userRes.json();
 
-        // Simulamos enlaces
-        const trailerUrl = "https://example.com/trailer";  // Simulación del enlace del tráiler
-        const playUrl = movieData.availableDate <= new Date().toISOString() ? "https://example.com/play" : null; // Simulación del enlace de Play
+        const trailerUrl = '';
+        const playUrl = movieData.availableDate <= new Date().toISOString() ? '' : null;
 
         setMovieDetails({ ...movieData, trailerUrl, playUrl });
         setGenres(genresData);
@@ -48,7 +42,6 @@ export default function MoviePage() {
         if (userData?.moviesIds.includes(movieId)) {
           setIsFavorite(true);
         }
-
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -76,7 +69,7 @@ export default function MoviePage() {
 
   return (
     <>
-      <Header handleSidebarToggle={handleSidebarToggle} />
+      <Header />
 
       <main className={styles.moviePageContainer}>
         <MoviesHero
