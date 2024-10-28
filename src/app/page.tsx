@@ -16,25 +16,29 @@ export default function Home() {
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
   const [animationKey, setAnimationKey] = useState(0);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const res = await fetch('/api/movies');
-      const data: Movie[] = await res.json();
-      setMovies(data);
+    const fetchMoviesAndGenres = async () => {
+      try {
+        const moviesRes = await fetch('/api/movies');
+        const moviesData: Movie[] = await moviesRes.json();
+        setMovies(moviesData);
 
-      const highlighted = data.filter((movie) => movie.highlighted);
-      setHighlightedMovies(highlighted);
+        const highlighted = moviesData.filter((movie) => movie.highlighted);
+        setHighlightedMovies(highlighted);
+
+        const genresRes = await fetch('/api/genres');
+        const genresData: Genre[] = await genresRes.json();
+        setGenres(genresData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const fetchGenres = async () => {
-      const res = await fetch('/api/genres');
-      const data: Genre[] = await res.json();
-      setGenres(data);
-    };
-
-    fetchMovies();
-    fetchGenres();
+    fetchMoviesAndGenres();
   }, []);
 
   useEffect(() => {
@@ -67,6 +71,10 @@ export default function Home() {
   const upcomingMovies = movies.filter(
     (movie) => new Date(movie.availableDate) > currentDate && (!selectedGenre || movie.genre === selectedGenre)
   );
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <div className={styles.homeContainer}>

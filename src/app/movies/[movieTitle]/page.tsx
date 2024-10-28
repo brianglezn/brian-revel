@@ -58,7 +58,7 @@ export default function MoviePage() {
   }, [movieId]);
 
   if (loading || !movieDetails) {
-    return <div>Loading...</div>;
+    return null;
   }
 
   const genreName = genres.find((genre) => genre.id === movieDetails.genre)?.name || 'Unknown';
