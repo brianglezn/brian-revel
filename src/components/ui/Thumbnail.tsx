@@ -4,9 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './Thumbnail.module.css';
-import StarRateIcon from '@/components/icons/StarRateIcon';
-import StarRateFilledIcon from '@/components/icons/StarRateFilledIcon';
-import StarRateHalfIcon from '@/components/icons/StarRateHalfIcon';
+import StarRating from '@/components/ui/StarRating';
 import { MovieThumbnail } from '@/app/types';
 import { slugify } from '@/utils/slugify';
 
@@ -19,28 +17,12 @@ export default function Thumbnail({ thumbnail, title, rating, id }: MovieThumbna
         router.push(`/movies/${slug}?id=${id}`);
     };
 
-    const renderStars = (rating: number | null) => {
-        const stars = [];
-        const normalizedRating = rating === null ? 0 : rating;
-
-        for (let i = 1; i <= 5; i++) {
-            if (i <= Math.floor(normalizedRating)) {
-                stars.push(<StarRateFilledIcon key={i} />);
-            } else if (i - normalizedRating < 1 && i - normalizedRating > 0) {
-                stars.push(<StarRateHalfIcon key={i} />);
-            } else {
-                stars.push(<StarRateIcon key={i} />);
-            }
-        }
-        return stars;
-    };
-
     return (
         <div
             className={styles.thumbnail}
             onMouseEnter={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
-            onClick={handleClick} // Redirige usando el slug del título
+            onClick={handleClick}
         >
             <div className={styles.imageContainer}>
                 <Image
@@ -54,7 +36,7 @@ export default function Thumbnail({ thumbnail, title, rating, id }: MovieThumbna
                     <div className={styles.overlay}>
                         <h3 className={styles.title}>{title}</h3>
                         <div className={styles.rating}>
-                            {renderStars(rating)}
+                            <StarRating rating={rating} />
                         </div>
                     </div>
                 )}

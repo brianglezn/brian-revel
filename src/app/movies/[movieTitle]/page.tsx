@@ -4,11 +4,17 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import Header from '@/components/layout/Header';
+import MoviesHero from '@/app/_movies/MoviesHero';
+import MoviesContent from '@/app/_movies/MoviesContent';
 import Footer from '@/components/layout/Footer';
+import { Genre, Movie } from '@/app/types';
 
 export default function MoviePage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [movieDetails, setMovieDetails] = useState(null);
+  const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
   const searchParams = useSearchParams();
   const movieId = searchParams.get('id');
 
@@ -17,71 +23,78 @@ export default function MoviePage() {
   };
 
   useEffect(() => {
-    const fetchMovieDetails = async () => {
+    const fetchMovieAndGenres = async () => {
       try {
-        console.log('Fetching movie details for ID:', movieId);
-        // Aquí se hace la solicitud a tu API interna que redirige a la API externa
-        const res = await fetch(`/api/movies/${movieId}`);
+        const movieRes = await fetch(`/api/movies/${movieId}`);
+        const genresRes = await fetch(`/api/genres`);
+        const userRes = await fetch('/api/user');
 
-        if (!res.ok) {
-          console.error('Error fetching movie details:', res.status);
+        if (!movieRes.ok || !genresRes.ok || !userRes.ok) {
+          console.error('Error fetching data:', movieRes.status, genresRes.status, userRes.status);
           return;
         }
 
-        const data = await res.json();
-        console.log('Movie details fetched:', data);
-        setMovieDetails(data);
+        const movieData = await movieRes.json();
+        const genresData = await genresRes.json();
+        const userData = await userRes.json();
+
+        // Simulamos enlaces
+        const trailerUrl = "https://example.com/trailer";  // Simulación del enlace del tráiler
+        const playUrl = movieData.availableDate <= new Date().toISOString() ? "https://example.com/play" : null; // Simulación del enlace de Play
+
+        setMovieDetails({ ...movieData, trailerUrl, playUrl });
+        setGenres(genresData);
+
+        if (userData?.moviesIds.includes(movieId)) {
+          setIsFavorite(true);
+        }
+
       } catch (error) {
-        console.error('Error fetching movie details:', error);
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
     if (movieId) {
-      fetchMovieDetails();
+      fetchMovieAndGenres();
     } else {
       console.error('Movie ID is missing');
+      setLoading(false);
     }
   }, [movieId]);
 
-  if (!movieDetails) {
-    console.log('Movie details are still loading...');
+  if (loading || !movieDetails) {
     return <div>Loading...</div>;
   }
+
+  const genreName = genres.find((genre) => genre.id === movieDetails.genre)?.name || 'Unknown';
+
+  const currentDate = new Date();
+  const availableDate = new Date(movieDetails.availableDate);
+  const isAvailable = availableDate <= currentDate;
 
   return (
     <>
       <Header handleSidebarToggle={handleSidebarToggle} />
 
       <main className={styles.moviePageContainer}>
-        {/* Hero Section */}
-        <section className={styles.hero}>
-          <div
-            className={styles.heroImage}
-            // style={{ backgroundImage: `url(${movieDetails.poster})` }}
-          >
-            <div className={styles.overlay}>
-              <div className={styles.actions}>
-                <button className={styles.trailerButton}>Trailer</button>
-                <button className={styles.playButton}>Play</button>
-              </div>
-            </div>
-          </div>
-        </section>
+        <MoviesHero
+          poster={movieDetails.poster}
+          isAvailable={isAvailable}
+          availableDate={movieDetails.availableDate}
+          trailerUrl={movieDetails.trailerUrl}
+          playUrl={isAvailable ? movieDetails.playUrl : null}
+        />
 
-        {/* Movie Content */}
-        <section className={styles.content}>
-          {/* <h2>{movieDetails.title}</h2>
-          <p>{movieDetails.description}</p> */}
-
-          <div className={styles.extraLinks}>
-            <h3>Related Links</h3>
-            <ul>
-              <li>Link 1</li>
-              <li>Link 2</li>
-              <li>Link 3</li>
-            </ul>
-          </div>
-        </section>
+        <MoviesContent
+          rating={isAvailable ? movieDetails.rating : null}
+          cast={movieDetails.cast}
+          genreName={genreName}
+          title={movieDetails.title}
+          description={movieDetails.description}
+          fav={isFavorite}
+        />
       </main>
 
       <Footer />

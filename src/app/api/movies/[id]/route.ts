@@ -1,32 +1,37 @@
-import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const id = url.pathname.split('/').pop();
+
+  if (!id) {
+    return NextResponse.json({ message: 'Movie ID is required' }, { status: 400 });
+  }
+
   try {
     const cookieStore = cookies();
     const token = (await cookieStore).get('token')?.value;
 
-    console.log(`Fetching movie with ID: ${params.id}`);
-    console.log(`Bearer ${token}`);
+    if (!token) {
+      return NextResponse.json({ message: 'Authentication token is missing' }, { status: 401 });
+    }
 
-    const res = await fetch(`https://kata.conducerevel.com/films/movies/${params.id}`, {
+    const res = await fetch(`https://kata.conducerevel.com/films/movies/${id}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
     });
 
     if (!res.ok) {
-      console.error(`Error fetching movie: ${res.status}`);
-      return NextResponse.json({ message: 'Error fetching movie' }, { status: res.status });
+      return NextResponse.json({ message: `Error fetching movie data: ${res.status}` }, { status: res.status });
     }
 
     const data = await res.json();
-    console.log('Movie data:', data);
-    return NextResponse.json(data);
+    return NextResponse.json(data, { status: 200 });
   } catch (error) {
-    console.error('Error during movie fetch:', error);
-    return NextResponse.json({ message: 'Error fetching movie', error }, { status: 500 });
+    console.error('Error fetching movie data:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

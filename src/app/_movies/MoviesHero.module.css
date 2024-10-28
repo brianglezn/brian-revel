@@ -1,38 +1,56 @@
-.hero {
+.movieHero {
     position: relative;
-    height: 70vh;
+    height: 90vh;
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: flex-end;
 }
 
-.hero .heroImage {
+.movieHero .heroImage {
     width: 100%;
     height: 100%;
     background-size: cover;
 }
 
-.hero .heroImage .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
+.movieHero .overlay {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.2);
     padding: 2rem;
     width: 100%;
+    height: 100%;
 }
 
-.hero .heroImage .overlay .actions {
+.movieHero .releaseDate {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+}
+
+.movieHero .actions {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
     display: flex;
     gap: 1rem;
 }
 
-.hero .heroImage .overlay .actions .trailerButton {
+.movieHero .actions button {
+    width: 30vw;
+    height: 3rem;
+    max-width: 300px;
+}
+
+.movieHero .actions .trailerButton {
     background-color: white;
     color: black;
     padding: 0.5rem 1rem;
 }
 
-.hero .heroImage .overlay .actions .playButton {
-    background-color: purple;
-    color: white;
+.movieHero .actions .playButton {
     padding: 0.5rem 1rem;
 }

@@ -56,9 +56,3 @@
     display: flex;
     gap: 5px;
 }
-
-.thumbnail .imageContainer .overlay .rating svg {
-    fill: #cfcf06;
-    width: 1.5rem;
-    height: 1.5rem;
-}
