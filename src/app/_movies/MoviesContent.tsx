@@ -3,12 +3,44 @@ import FavoriteIcon from '@/components/icons/FavoriteIcon';
 import FavoriteFilledIcon from '@/components/icons/FavoriteFilledIcon';
 import StarRating from '@/components/ui/StarRating';
 import { MovieContentProps } from '@/app/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function MoviesContent({ rating, cast, genreName, title, description, fav, trailerUrl, playUrl, id }: MovieContentProps) {
-    const [isFavorite, setIsFavorite] = useState(fav);
+export default function MoviesContent({ rating, cast, genreName, title, description, trailerUrl, playUrl, id }: MovieContentProps) {
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                const response = await fetch('/api/user', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const favoriteMovies = await response.json();
+                    console.log("Respuesta completa del API para películas en favoritos:", favoriteMovies);
+
+                    if (favoriteMovies.some((favId: string) => favId.toLowerCase() === id.toLowerCase())) {
+                        setIsFavorite(true);
+                    } else {
+                        setIsFavorite(false);
+                    }
+
+                } else {
+                    console.error('Failed to fetch favorite movies');
+                }
+            } catch (error) {
+                console.error('Error fetching favorite movies:', error);
+            }
+        };
+
+        fetchFavorites();
+    }, [id]);
 
     const handleAddToFavorites = async () => {
+        console.log("Adding movie to favorites with ID:", id);
         try {
             const response = await fetch('/api/list', {
                 method: 'POST',
@@ -17,6 +49,8 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
                 },
                 body: JSON.stringify({ id }),
             });
+
+            console.log("Response status from POST:", response.status);
 
             if (response.ok) {
                 setIsFavorite(true);
@@ -29,6 +63,8 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
     };
 
     const handleRemoveFromFavorites = async () => {
+        console.log("Removing movie from favorites with ID:", id);
+
         try {
             const response = await fetch(`/api/list/${id}`, {
                 method: 'DELETE',
@@ -37,8 +73,11 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
                 },
             });
 
+            console.log("Response status from DELETE:", response.status);
+
             if (response.ok) {
                 setIsFavorite(false);
+                console.log("Movie removed from favorites successfully");
             } else {
                 console.error('Failed to remove movie from favorites');
             }

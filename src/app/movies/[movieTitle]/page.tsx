@@ -13,7 +13,6 @@ export default function MoviePage() {
   const [movieDetails, setMovieDetails] = useState<Movie | null>(null);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [loading, setLoading] = useState(true);
-  const [isFavorite, setIsFavorite] = useState(false);
   const searchParams = useSearchParams();
   const movieId = searchParams.get('id');
 
@@ -22,16 +21,14 @@ export default function MoviePage() {
       try {
         const movieRes = await fetch(`/api/movies/${movieId}`);
         const genresRes = await fetch(`/api/genres`);
-        const userRes = await fetch('/api/user');
 
-        if (!movieRes.ok || !genresRes.ok || !userRes.ok) {
-          console.error('Error fetching data:', movieRes.status, genresRes.status, userRes.status);
+        if (!movieRes.ok || !genresRes.ok) {
+          console.error('Error fetching data:', movieRes.status, genresRes.status);
           return;
         }
 
         const movieData = await movieRes.json();
         const genresData = await genresRes.json();
-        const userData = await userRes.json();
 
         // Simula las URLs
         const trailerUrl = 'https://example.com/trailer';
@@ -40,9 +37,6 @@ export default function MoviePage() {
         setMovieDetails({ ...movieData, trailerUrl, playUrl });
         setGenres(genresData);
 
-        if (userData?.moviesIds.includes(movieId)) {
-          setIsFavorite(true);
-        }
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -88,7 +82,6 @@ export default function MoviePage() {
           genreName={genreName}
           title={movieDetails.title}
           description={movieDetails.description}
-          fav={isFavorite}
           trailerUrl={movieDetails.trailerUrl}
           playUrl={isAvailable ? movieDetails.playUrl : null}
         />

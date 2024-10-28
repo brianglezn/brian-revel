@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-export async function POST(request: Request) {
+export async function DELETE(request: Request) {
+    const url = new URL(request.url);
+    const id = url.pathname.split('/').pop();
+
+    if (!id) {
+        return NextResponse.json({ message: 'Movie ID is required' }, { status: 400 });
+    }
+
     try {
-        const { id } = await request.json();
-
-        if (!id) {
-            return NextResponse.json({ message: 'Movie ID is required' }, { status: 400 });
-        }
-
         const cookieStore = cookies();
         const token = (await cookieStore).get('token')?.value;
 
@@ -17,22 +18,19 @@ export async function POST(request: Request) {
         }
 
         const res = await fetch(`https://kata.conducerevel.com/films/user/list/${id}`, {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id }),
         });
 
         if (!res.ok) {
-            return NextResponse.json({ message: `Error adding movie to list: ${res.status}` }, { status: res.status });
+            return NextResponse.json({ message: `Error removing movie from list: ${res.status}` }, { status: res.status });
         }
 
-        const data = await res.json();
-        return NextResponse.json(data, { status: 200 });
+        return NextResponse.json({ message: 'Movie removed from list' }, { status: 200 });
     } catch (error) {
-        console.error('Error adding movie to list:', error);
+        console.error('Error removing movie from list:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 }
