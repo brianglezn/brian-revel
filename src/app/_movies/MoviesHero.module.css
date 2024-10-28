@@ -29,6 +29,8 @@
     font-size: 3rem;
     font-weight: 500;
     margin-bottom: 2rem;
+    text-align: center;
+    color: var(--text-color-white);
 }
 
 .movieHero .actions {
@@ -43,14 +45,50 @@
     width: 30vw;
     height: 3rem;
     max-width: 300px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
 .movieHero .actions .trailerButton {
-    background-color: white;
-    color: black;
+    background-color: var(--text-color-white);
+    color: var(--text-color-black);
     padding: 0.5rem 1rem;
 }
 
 .movieHero .actions .playButton {
+    background-color: var(--primary-color-600);
+    color: var(--text-color-white);
     padding: 0.5rem 1rem;
+}
+
+@media (max-width: 768px) {
+    .movieHero {
+        height: 50vh;
+        align-items: center;
+    }
+
+    .movieHero .releaseDate {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .movieHero .actions {
+        display: none;
+    }
+
+    .movieHero .overlay {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .movieHero {
+        height: 35vh;
+    }
+
+    .movieHero .releaseDate {
+        font-size: 1.5rem;
+    }
 }

@@ -21,9 +21,16 @@ export default function Header() {
     router.push('/login');
   };
 
+  const navigateHome = () => {
+    router.push('/');
+  };
+
   return (
     <>
       <header className={styles.header}>
+        <button onClick={navigateHome} className={styles.homeButton}>
+          Home
+        </button>
         <Avatar alt="User Avatar" size="small" onClick={handleSidebarToggle} />
       </header>
 

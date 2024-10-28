@@ -88,6 +88,8 @@ export default function MoviePage() {
           title={movieDetails.title}
           description={movieDetails.description}
           fav={isFavorite}
+          trailerUrl={movieDetails.trailerUrl}
+          playUrl={isAvailable ? movieDetails.playUrl : null}
         />
       </main>
 

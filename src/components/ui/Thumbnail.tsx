@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import styles from './Thumbnail.module.css';
 import StarRating from '@/components/ui/StarRating';
 import { MovieThumbnail } from '@/app/types';

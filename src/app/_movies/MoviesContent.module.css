@@ -5,6 +5,22 @@
   padding: 2rem;
 }
 
+.movieContent .actions {
+  display: none;
+}
+
+.movieContent .actions .trailerButton {
+  background-color: var(--text-color-white);
+  color: var(--text-color-black);
+  padding: 0.5rem 1rem;
+}
+
+.movieContent .actions .playButton {
+  background-color: var(--primary-color-600);
+  color: var(--text-color-white);
+  padding: 0.5rem 1rem;
+}
+
 .movieContent .movieItems {
   display: flex;
   align-items: center;
@@ -41,7 +57,7 @@
 .movieContent .movieItems .favoriteText {
   display: flex;
   justify-content: flex-end;
-  color: rgb(126, 126, 126);
+  color: var(--text-color-grey);
   height: 100%;
 }
 
@@ -60,4 +76,40 @@
 .movieContent .titleSection h2 {
   font-size: 5rem;
   text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+  .movieContent .actions {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .movieContent .actions button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .movieContent .titleSection h2 {
+    font-size: 3rem;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .movieContent .actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .movieContent .movieItems .favoriteContainer p {
+    display: none;
+  }
+
+  .movieContent .titleSection h2 {
+    font-size: 2rem;
+  }
 }

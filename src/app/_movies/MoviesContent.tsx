@@ -2,11 +2,24 @@ import styles from './MoviesContent.module.css';
 import FavoriteIcon from '@/components/icons/FavoriteIcon';
 import FavoriteFilledIcon from '@/components/icons/FavoriteFilledIcon';
 import StarRating from '@/components/ui/StarRating';
-import { MovieContentProps } from '../types';
+import { MovieContentProps } from '@/app/types';
 
-export default function MoviesContent({ rating, cast, genreName, title, description, fav }: MovieContentProps) {
+export default function MoviesContent({ rating, cast, genreName, title, description, fav, trailerUrl, playUrl }: MovieContentProps) {
     return (
         <section className={styles.movieContent}>
+            <div className={styles.actions}>
+                {trailerUrl && (
+                    <button className={styles.trailerButton} onClick={() => window.open(trailerUrl, '_blank')}>
+                        Trailer
+                    </button>
+                )}
+                {playUrl && (
+                    <button className={styles.playButton} onClick={() => window.open(playUrl, '_blank')}>
+                        Play
+                    </button>
+                )}
+            </div>
+
             <div className={styles.movieItems}>
                 <div className={styles.detailsSection}>
                     <div className={styles.starRating}>

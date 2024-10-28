@@ -1,0 +1,124 @@
+.footer {
+    background-color: #1a1a1a;
+    color: var(--text-color-white);
+    padding: 2rem;
+    margin-top: 8rem;
+    font-family: Arial, sans-serif;
+}
+
+.footerContent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #333;
+}
+
+.logoSection {
+    flex: 1 1 20%;
+    text-align: left;
+}
+
+.logo {
+    font-size: 1.8rem;
+    color: var(--primary-color-600);
+}
+
+.tagline {
+    font-size: 0.9rem;
+    color: var(--text-color-grey);
+}
+
+.linksSection,
+.contactSection {
+    flex: 1 1 20%;
+}
+
+.linksSection h3,
+.contactSection h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color-600);
+    margin-bottom: 0.5rem;
+}
+
+.linksList {
+    list-style: none;
+    padding: 0;
+}
+
+.linksList li {
+    margin-bottom: 0.5rem;
+}
+
+.linksList li a,
+.contactSection a {
+    color: var(--text-color-grey);
+    text-decoration: none;
+}
+
+.linksList li a:hover,
+.contactSection a:hover {
+    color: var(--primary-color-600);
+}
+
+.footerBottom {
+    text-align: center;
+    padding-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-color-grey);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .footerContent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .logoSection,
+    .linksSection,
+    .contactSection {
+        flex: 1 1 100%;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .linksSection h3,
+    .contactSection h3 {
+        font-size: 1.1rem;
+    }
+
+    .linksList li {
+        font-size: 0.9rem;
+    }
+
+    .tagline {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer {
+        padding: 1.5rem;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
+    .footerContent {
+        padding-bottom: 1rem;
+    }
+
+    .footerBottom {
+        font-size: 0.8rem;
+    }
+
+    .linksList li {
+        font-size: 0.8rem;
+    }
+}

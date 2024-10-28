@@ -20,23 +20,25 @@ export default function HomeGenres({
 }: HomeGenresProps) {
   return (
     <section className={styles.genres}>
-      <ul className={styles.genreList}>
-        <li
-          onClick={() => onSelectGenre(null)}
-          className={!selectedGenre ? styles.activeGenre : ''}
-        >
-          All
-        </li>
-        {genres.map(genre => (
+      <Carousel>
+        <ul className={styles.genreList}>
           <li
-            key={genre.id}
-            onClick={() => onSelectGenre(genre.id)}
-            className={selectedGenre === genre.id ? styles.activeGenre : ''}
+            onClick={() => onSelectGenre(null)}
+            className={!selectedGenre ? styles.activeGenre : ''}
           >
-            {genre.name}
+            All
           </li>
-        ))}
-      </ul>
+          {genres.map((genre) => (
+            <li
+              key={genre.id}
+              onClick={() => onSelectGenre(genre.id)}
+              className={selectedGenre === genre.id ? styles.activeGenre : ''}
+            >
+              {genre.name}
+            </li>
+          ))}
+        </ul>
+      </Carousel>
 
       {Object.entries(
         availableMovies.reduce((acc, movie) => {
@@ -49,7 +51,7 @@ export default function HomeGenres({
         <div key={genreName} className={styles.genre}>
           <h2>{genreName}</h2>
           <Carousel>
-            {genreMovies.map(movie => (
+            {genreMovies.map((movie) => (
               <Thumbnail
                 key={movie.id}
                 thumbnail={movie.thumbnail}

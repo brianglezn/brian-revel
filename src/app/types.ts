@@ -42,6 +42,8 @@ export type MovieContentProps = {
     title: string;
     description: string;
     fav: boolean;
+    trailerUrl: string | null;
+    playUrl: string | null;
 };
 
 export interface Genre {

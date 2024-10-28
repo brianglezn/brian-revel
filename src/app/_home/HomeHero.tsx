@@ -1,6 +1,8 @@
+import { useRouter } from 'next/navigation';
 import styles from './HomeHero.module.css';
 import MainIndicator from '@/components/ui/MainIndicator';
 import { Movie } from '@/app/types';
+import { slugify } from '@/utils/slugify';
 
 interface HomeHeroProps {
   currentMovie: Movie | undefined;
@@ -15,9 +17,17 @@ export default function HomeHero({
   highlightedMoviesLength,
   onIndicatorClick
 }: HomeHeroProps) {
+  const router = useRouter();
 
   const truncateDescription = (description: string, maxLength: number) => {
     return description.length > maxLength ? description.slice(0, maxLength) + '...' : description;
+  };
+
+  const handleDiscoverClick = () => {
+    if (currentMovie) {
+      const slug = slugify(currentMovie.title);
+      router.push(`/movies/${slug}?id=${currentMovie.id}`);
+    }
   };
 
   return (
@@ -31,7 +41,9 @@ export default function HomeHero({
           <p className={styles.description}>
             {truncateDescription(currentMovie?.description || '', 150)}
           </p>
-          <button className={styles.button}>Discover</button>
+          <button className={styles.button} onClick={handleDiscoverClick}>
+            Discover
+          </button>
         </div>
       </div>
       <MainIndicator

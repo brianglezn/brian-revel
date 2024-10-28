@@ -14,6 +14,7 @@
 
 .carousel .carouselContent {
     display: flex;
+    width: 100%;
     gap: 1rem;
     flex-shrink: 0;
 }
@@ -58,4 +59,10 @@
 .carousel .rightButton:hover {
     background-color: rgba(0, 0, 0, 0.5);
     box-shadow: -20px 0px 20px 6px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 480px) {
+    .carousel .carouselContent {
+        width: auto;
+    }
 }
