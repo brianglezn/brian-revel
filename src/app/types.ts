@@ -36,6 +36,7 @@ export type MovieHeroProps = {
 }
 
 export type MovieContentProps = {
+    id: string;
     rating: number | null;
     cast: string;
     genreName: string;

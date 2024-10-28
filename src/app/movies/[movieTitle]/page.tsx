@@ -82,6 +82,7 @@ export default function MoviePage() {
         />
 
         <MoviesContent
+          id={movieDetails.id}
           rating={isAvailable ? movieDetails.rating : null}
           cast={movieDetails.cast}
           genreName={genreName}

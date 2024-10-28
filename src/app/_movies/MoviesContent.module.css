@@ -64,9 +64,13 @@
 .movieContent .movieItems .favoriteContainer .favoriteButton {
   display: flex;
   justify-content: flex-end;
+  background: none;
+}
+
+.movieContent .movieItems .favoriteContainer .favoriteButton svg {
+  fill: var(--primary-color-600);
   width: 2.5rem;
   height: 2.5rem;
-  fill: var(--primary-color-600);
 }
 
 .movieContent .titleSection {
@@ -78,12 +82,15 @@
   text-transform: capitalize;
 }
 
+.movieContent .titleSection p {
+  color: var(--text-color-grey);
+}
+
 @media (max-width: 768px) {
   .movieContent .actions {
     display: flex;
     width: 100%;
     gap: 0.5rem;
-    width: 100%;
   }
 
   .movieContent .actions button {
@@ -94,11 +101,9 @@
   .movieContent .titleSection h2 {
     font-size: 3rem;
   }
-
 }
 
 @media (max-width: 480px) {
-
   .movieContent .actions {
     display: flex;
     flex-direction: column;

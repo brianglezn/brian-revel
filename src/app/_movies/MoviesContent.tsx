@@ -3,8 +3,50 @@ import FavoriteIcon from '@/components/icons/FavoriteIcon';
 import FavoriteFilledIcon from '@/components/icons/FavoriteFilledIcon';
 import StarRating from '@/components/ui/StarRating';
 import { MovieContentProps } from '@/app/types';
+import { useState } from 'react';
 
-export default function MoviesContent({ rating, cast, genreName, title, description, fav, trailerUrl, playUrl }: MovieContentProps) {
+export default function MoviesContent({ rating, cast, genreName, title, description, fav, trailerUrl, playUrl, id }: MovieContentProps) {
+    const [isFavorite, setIsFavorite] = useState(fav);
+
+    const handleAddToFavorites = async () => {
+        try {
+            const response = await fetch('/api/list', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }),
+            });
+
+            if (response.ok) {
+                setIsFavorite(true);
+            } else {
+                console.error('Failed to add movie to favorites');
+            }
+        } catch (error) {
+            console.error('Error adding movie to favorites:', error);
+        }
+    };
+
+    const handleRemoveFromFavorites = async () => {
+        try {
+            const response = await fetch(`/api/list/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                setIsFavorite(false);
+            } else {
+                console.error('Failed to remove movie from favorites');
+            }
+        } catch (error) {
+            console.error('Error removing movie from favorites:', error);
+        }
+    };
+
     return (
         <section className={styles.movieContent}>
             <div className={styles.actions}>
@@ -32,10 +74,14 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
 
                 <div className={styles.favoriteContainer}>
                     <p className={styles.favoriteText}>Add to Favorites</p>
-                    {fav ? (
-                        <FavoriteFilledIcon className={styles.favoriteButton} />
+                    {isFavorite ? (
+                        <button onClick={handleRemoveFromFavorites} className={styles.favoriteButton}>
+                            <FavoriteFilledIcon />
+                        </button>
                     ) : (
-                        <FavoriteIcon className={styles.favoriteButton} />
+                        <button onClick={handleAddToFavorites} className={styles.favoriteButton}>
+                            <FavoriteIcon />
+                        </button>
                     )}
                 </div>
             </div>
