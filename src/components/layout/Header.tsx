@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Avatar from '@/components/ui/Avatar';
 import LogoutSidebar from '@/components/ui/LogoutSidebar';
 import styles from './Header.module.css';
@@ -7,6 +7,7 @@ import styles from './Header.module.css';
 export default function Header() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -26,9 +27,11 @@ export default function Header() {
   return (
     <>
       <header className={styles.header}>
-        <button onClick={navigateHome} className={styles.homeButton}>
-          Home
-        </button>
+        {pathname !== '/' && (
+          <button onClick={navigateHome} className={styles.homeButton}>
+            Home
+          </button>
+        )}
         <Avatar alt="User Avatar" size="small" onClick={handleSidebarToggle} />
       </header>
 
