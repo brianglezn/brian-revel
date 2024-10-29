@@ -48,11 +48,12 @@ export default function Home() {
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [highlightedMovies]);
+  }, [highlightedMovies, currentMovieIndex]);
 
-  useEffect(() => {
+  const handleIndicatorClick = (index: number) => {
+    setCurrentMovieIndex(index);
     setAnimationKey((prevKey) => prevKey + 1);
-  }, [currentMovieIndex]);
+  };
 
   const currentMovie = highlightedMovies[currentMovieIndex];
 
@@ -87,7 +88,7 @@ export default function Home() {
           currentMovie={currentMovie}
           currentMovieIndex={currentMovieIndex}
           highlightedMoviesLength={highlightedMovies.length}
-          onIndicatorClick={(index) => setCurrentMovieIndex(index)}
+          onIndicatorClick={handleIndicatorClick}
         />
       )}
 
