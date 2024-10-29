@@ -3,11 +3,10 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    width: 100%;
-}
-
-.hidden {
-    display: none;
+    background-color: rgba(45, 45, 45, 0.575);
+    padding: 1rem 0;
+    margin: 0 1rem;
+    border-radius: var(--border-radius);
 }
 
 .list .listContainer {

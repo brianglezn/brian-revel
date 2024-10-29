@@ -21,7 +21,6 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
 
                 if (response.ok) {
                     const favoriteMovies = await response.json();
-                    console.log("Respuesta completa del API para películas en favoritos:", favoriteMovies);
 
                     if (favoriteMovies.some((favId: string) => favId.toLowerCase() === id.toLowerCase())) {
                         setIsFavorite(true);

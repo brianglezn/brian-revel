@@ -38,8 +38,8 @@
     margin-bottom: 2rem;
 }
 
-.button {
-    width: 20rem;
+.hero .overlay .textContainer .button {
+    width: 25rem;
 }
 
 @media (max-width: 768px) {
@@ -59,6 +59,10 @@
     .hero .overlay .textContainer .description {
         font-size: 1.1rem;
     }
+
+    .hero .overlay .textContainer .button {
+        width: 20rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -68,5 +72,9 @@
 
     .hero .overlay .textContainer .description {
         font-size: 1rem;
+    }
+
+    .hero .overlay .textContainer .button {
+        width: 80%;
     }
 }
