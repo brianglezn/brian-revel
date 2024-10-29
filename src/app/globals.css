@@ -9,7 +9,7 @@
   --primary-color-light: #fed0f8;
   --primary-color-dark: #4d0539;
   --transition-speed: 0.3s;
-  --border-radius: 8px;
+  --border-radius: 0.5rem;
 }
 
 html {

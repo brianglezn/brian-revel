@@ -5,8 +5,8 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.footerContent}>
         <div className={styles.logoSection}>
-          <h2 className={styles.logo}>MovieHub</h2>
-          <p className={styles.tagline}>Your ultimate movie discovery destination</p>
+          <h2 className={styles.logo}>Brian</h2>
+          <p className={styles.tagline}>Web developer</p>
         </div>
 
         <div className={styles.linksSection}>
@@ -21,13 +21,13 @@ export default function Footer() {
 
         <div className={styles.contactSection}>
           <h3>Contact Us</h3>
-          <p>Email: <a href="mailto:support@moviehub.com">support@xxxx.com</a></p>
-          <p>Phone: <a href="tel:+123456789">+XX XXX XXX XXX</a></p>
+          <p>Email: <a href="mailto:#">support@xxxx.com</a></p>
+          <p>Phone: <a href="tel:#">+XX XXX XXX XXX</a></p>
         </div>
       </div>
 
       <div className={styles.footerBottom}>
-        <p>&copy; {new Date().getFullYear()} Brian · <a href="https://brian-novoa.com/">brian-novoa.com</a></p>
+        <p>&copy; {new Date().getFullYear()} · <a href="https://brian-novoa.com/">brian-novoa.com</a></p>
       </div>
     </footer>
   );

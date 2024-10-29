@@ -12,7 +12,7 @@
 }
 
 .genreList li {
-    padding: 10px 20px;
+    padding: .8rem 1.6rem;
     border: 0.1px solid #232323;
     border-radius: var(--border-radius);
     color: var(--text-color-white);

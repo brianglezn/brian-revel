@@ -68,7 +68,6 @@
     color: var(--text-color-grey);
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .footerContent {
         flex-direction: column;

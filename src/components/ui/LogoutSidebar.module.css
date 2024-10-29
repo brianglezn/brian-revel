@@ -42,8 +42,3 @@
     fill: var(--primary-color-light);
     transition: fill var(--transition-speed);
 }
-
-.sidebarContent .sidebarButton {
-    margin-top: 10px;
-    padding: 8px 20px;
-}

@@ -18,7 +18,7 @@
 }
 
 .indicators .indicator:hover {
-    background-color: var(--primary-color-light);
+    background-color: var(--primary-color-600);
     opacity: 0.5;
 }
 
