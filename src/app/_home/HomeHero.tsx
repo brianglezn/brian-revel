@@ -1,3 +1,5 @@
+'use client'
+
 import { useRouter } from 'next/navigation';
 import styles from './HomeHero.module.css';
 import MainIndicator from '@/components/ui/MainIndicator';

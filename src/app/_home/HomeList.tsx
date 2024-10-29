@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react';
 import Carousel from '@/components/ui/Carousel';
 import Thumbnail from '@/components/ui/Thumbnail';

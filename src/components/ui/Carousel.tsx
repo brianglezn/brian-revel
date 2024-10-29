@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode, useRef, useState, useEffect } from 'react';
 import styles from './Carousel.module.css';
 import ArrowBackIcon from '../icons/ArrowBackIcon';
