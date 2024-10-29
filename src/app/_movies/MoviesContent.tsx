@@ -1,12 +1,13 @@
+import { useState, useEffect } from 'react';
 import styles from './MoviesContent.module.css';
 import FavoriteIcon from '@/components/icons/FavoriteIcon';
 import FavoriteFilledIcon from '@/components/icons/FavoriteFilledIcon';
 import StarRating from '@/components/ui/StarRating';
 import { MovieContentProps } from '@/app/types';
-import { useState, useEffect } from 'react';
 
 export default function MoviesContent({ rating, cast, genreName, title, description, trailerUrl, playUrl, id }: MovieContentProps) {
     const [isFavorite, setIsFavorite] = useState(false);
+    const [animateFavorite, setAnimateFavorite] = useState(false);
 
     useEffect(() => {
         const fetchFavorites = async () => {
@@ -27,7 +28,6 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
                     } else {
                         setIsFavorite(false);
                     }
-
                 } else {
                     console.error('Failed to fetch favorite movies');
                 }
@@ -40,7 +40,6 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
     }, [id]);
 
     const handleAddToFavorites = async () => {
-        console.log("Adding movie to favorites with ID:", id);
         try {
             const response = await fetch('/api/list', {
                 method: 'POST',
@@ -50,10 +49,9 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
                 body: JSON.stringify({ id }),
             });
 
-            console.log("Response status from POST:", response.status);
-
             if (response.ok) {
                 setIsFavorite(true);
+                triggerAnimation();
             } else {
                 console.error('Failed to add movie to favorites');
             }
@@ -63,8 +61,6 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
     };
 
     const handleRemoveFromFavorites = async () => {
-        console.log("Removing movie from favorites with ID:", id);
-
         try {
             const response = await fetch(`/api/list/${id}`, {
                 method: 'DELETE',
@@ -73,17 +69,21 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
                 },
             });
 
-            console.log("Response status from DELETE:", response.status);
-
             if (response.ok) {
                 setIsFavorite(false);
-                console.log("Movie removed from favorites successfully");
+                triggerAnimation();
             } else {
                 console.error('Failed to remove movie from favorites');
             }
         } catch (error) {
             console.error('Error removing movie from favorites:', error);
         }
+    };
+
+    // Función para activar la animación
+    const triggerAnimation = () => {
+        setAnimateFavorite(true);
+        setTimeout(() => setAnimateFavorite(false), 300); // Duración en ms debe coincidir con la animación en CSS
     };
 
     return (
@@ -114,11 +114,17 @@ export default function MoviesContent({ rating, cast, genreName, title, descript
                 <div className={styles.favoriteContainer}>
                     <p className={styles.favoriteText}>Add to Favorites</p>
                     {isFavorite ? (
-                        <button onClick={handleRemoveFromFavorites} className={styles.favoriteButton}>
+                        <button
+                            onClick={handleRemoveFromFavorites}
+                            className={`${styles.favoriteButton} ${animateFavorite ? styles.bounceAnimation : ''}`}
+                        >
                             <FavoriteFilledIcon />
                         </button>
                     ) : (
-                        <button onClick={handleAddToFavorites} className={styles.favoriteButton}>
+                        <button
+                            onClick={handleAddToFavorites}
+                            className={`${styles.favoriteButton} ${animateFavorite ? styles.bounceAnimation : ''}`}
+                        >
                             <FavoriteIcon />
                         </button>
                     )}
