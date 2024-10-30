@@ -18,20 +18,24 @@ export default function Home() {
   const [animationKey, setAnimationKey] = useState(0);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const currentDate = new Date();
 
+  // useEffect que realiza una llamada a la API para obtener datos de películas y géneros
   useEffect(() => {
     const fetchMoviesAndGenres = async () => {
       try {
+        // Llamada a la API para obtener la lista de películas y generos
         const moviesRes = await fetch('/api/movies');
         const moviesData: Movie[] = await moviesRes.json();
         setMovies(moviesData);
-
-        const highlighted = moviesData.filter((movie) => movie.highlighted);
-        setHighlightedMovies(highlighted);
-
         const genresRes = await fetch('/api/genres');
         const genresData: Genre[] = await genresRes.json();
         setGenres(genresData);
+
+        // Filtra las películas para seleccionar las destacadas
+        const highlighted = moviesData.filter((movie) => movie.highlighted);
+        setHighlightedMovies(highlighted);
+
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -42,38 +46,43 @@ export default function Home() {
     fetchMoviesAndGenres();
   }, []);
 
+  // useEffect para manejar el intervalo de cambio automático en el carrusel de películas destacadas
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentMovieIndex((prevIndex) => (prevIndex + 1) % highlightedMovies.length);
     }, 10000);
 
+    // Limpia el intervalo al desmontar el componente o al actualizar el índice
     return () => clearInterval(interval);
   }, [highlightedMovies, currentMovieIndex]);
 
+  // Función para manejar el cambio manual del índice de la película destacada
   const handleIndicatorClick = (index: number) => {
     setCurrentMovieIndex(index);
+    // Incrementa la clave de animación para forzar una actualización visual
     setAnimationKey((prevKey) => prevKey + 1);
   };
 
+  // Selecciona la película actual en el carrusel según el índice
   const currentMovie = highlightedMovies[currentMovieIndex];
 
+  // Mapa de géneros para una búsqueda rápida por ID de género
   const genreMap = genres.reduce((acc, genre) => {
     acc[genre.id] = genre.name;
     return acc;
   }, {} as Record<string, string>);
 
-  const currentDate = new Date();
-
+  // Filtra las películas disponibles
   const availableMovies = movies.filter(
     (movie) =>
       (!selectedGenre || movie.genre === selectedGenre) &&
       new Date(movie.availableDate) <= currentDate
   );
 
-  const upcomingMovies = movies.filter(
-    (movie) => new Date(movie.availableDate) > currentDate && (!selectedGenre || movie.genre === selectedGenre)
-  );
+  // Filtra las películas no disponibles
+  const upcomingMovies = movies.filter((movie) => new Date(movie.availableDate) > currentDate && (!selectedGenre || movie.genre === selectedGenre));
 
+  // Si los datos están cargando, no se muestra nada hasta que estén listos
   if (loading) {
     return null;
   }
@@ -82,26 +91,30 @@ export default function Home() {
     <div className={styles.homeContainer}>
       <Header />
 
+      {/* Si hay películas destacadas, muestra el carrusel de películas destacadas */}
       {highlightedMovies.length > 0 && (
         <HomeHero
-          key={animationKey}
-          currentMovie={currentMovie}
-          currentMovieIndex={currentMovieIndex}
-          highlightedMoviesLength={highlightedMovies.length}
-          onIndicatorClick={handleIndicatorClick}
+          key={animationKey} // Clave para forzar la animación en el cambio manual
+          currentMovie={currentMovie} // Película actual a mostrar
+          currentMovieIndex={currentMovieIndex} // Índice actual en el carrusel
+          highlightedMoviesLength={highlightedMovies.length} // Total de películas destacadas
+          onIndicatorClick={handleIndicatorClick} // Función para manejar el clic en el indicador
         />
       )}
 
+      {/* Componente que muestra las películas filtradas por género */}
       <HomeGenres
-        genres={genres}
-        availableMovies={availableMovies}
-        selectedGenre={selectedGenre}
-        onSelectGenre={setSelectedGenre}
-        genreMap={genreMap}
+        genres={genres} // Lista de géneros
+        availableMovies={availableMovies} // Películas actualmente disponibles
+        selectedGenre={selectedGenre} // Género actualmente seleccionado
+        onSelectGenre={setSelectedGenre} // Función para seleccionar un género
+        genreMap={genreMap} // Mapa de géneros
       />
 
+      {/* Componente que muestra las películas próximas a estrenarse */}
       <HomeSoon upcomingMovies={upcomingMovies} />
 
+      {/* Componente que muestra la lista de películas favoritas */}
       <HomeList />
 
       <Footer />

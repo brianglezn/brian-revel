@@ -1,3 +1,5 @@
+// Movie
+
 export interface Movie {
     id: string;
     title: string;
@@ -45,6 +47,8 @@ export type MovieContentProps = {
     trailerUrl: string | null;
     playUrl: string | null;
 };
+
+// Genre
 
 export interface Genre {
     id: string;

@@ -1,0 +1,93 @@
+.movieHero {
+    position: relative;
+    height: 90vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+.movieHero .heroImage {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+}
+
+.movieHero .overlay {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+}
+
+.movieHero .releaseDate {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: var(--text-color-white);
+}
+
+.movieHero .actions {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.movieHero .actions button {
+    width: 30vw;
+    height: 3rem;
+    max-width: 20rem;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.movieHero .actions .trailerButton {
+    background-color: var(--text-color-white);
+    color: var(--text-color-black);
+    padding: 0.8rem 1rem;
+}
+
+.movieHero .actions .playButton {
+    background-color: var(--primary-color-600);
+    color: var(--text-color-white);
+    padding: 0.8rem 1rem;
+}
+
+@media (max-width: 768px) {
+    .movieHero {
+        height: 50vh;
+        align-items: center;
+    }
+
+    .movieHero .releaseDate {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .movieHero .actions {
+        display: none;
+    }
+
+    .movieHero .overlay {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .movieHero {
+        height: 35vh;
+    }
+
+    .movieHero .releaseDate {
+        font-size: 1.5rem;
+    }
+}
