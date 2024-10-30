@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 import { fetchMoviesById, fetchGenres, fetchFavorites } from '@/utils/fetchData';
 
 interface MoviePageProps {
-  searchParams: { id?: string };
+  searchParams: Promise<{ id?: string }>;
 }
 
 export default async function MoviePage({ searchParams }: MoviePageProps) {
@@ -18,7 +18,8 @@ export default async function MoviePage({ searchParams }: MoviePageProps) {
     return <p>No authentication token found.</p>;
   }
 
-  const movieId = searchParams?.id;
+  const { id: movieId } = await searchParams;
+
   if (!movieId) {
     return <p className={styles.error}>Movie ID not found in the query parameters.</p>;
   }
@@ -39,7 +40,7 @@ export default async function MoviePage({ searchParams }: MoviePageProps) {
   const availableDate = new Date(movieDetails.availableDate);
   const isAvailable = availableDate <= currentDate;
 
-  // URLs simuladas para el tráiler y la reproducción
+  // Simulated URLs for trailer and playback
   const trailerUrl = 'https://example.com/trailer';
   const playUrl = 'https://example.com/play';
 

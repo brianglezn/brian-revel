@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './MoviesContent.module.css';
 import FavoriteIcon from '@/components/icons/FavoriteIcon';
 import FavoriteFilledIcon from '@/components/icons/FavoriteFilledIcon';
@@ -16,19 +16,20 @@ export default function MoviesContent({
   description,
   trailerUrl,
   playUrl,
-  isFavorite: initialIsFavorite
+  isFavorite: initialIsFavorite,
 }: MovieContentProps) {
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
+  const [animateFavorite, setAnimateFavorite] = useState(false);
 
   const handleFavoriteToggle = async () => {
     try {
-      const url = `/api/list/${id}`;
+      const url = isFavorite ? `/api/list/${id}` : '/api/list';
       const method = isFavorite ? 'DELETE' : 'POST';
 
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id })
+        body: isFavorite ? null : JSON.stringify({ id }),
       });
 
       if (response.ok) {
@@ -40,6 +41,15 @@ export default function MoviesContent({
       console.error('Error toggling favorite status:', error);
     }
   };
+
+  // Activar animación cuando isFavorite cambia
+  useEffect(() => {
+    if (isFavorite !== initialIsFavorite) {
+      setAnimateFavorite(true);
+      const timer = setTimeout(() => setAnimateFavorite(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isFavorite, initialIsFavorite]);
 
   return (
     <section className={styles.movieContent}>
@@ -70,7 +80,7 @@ export default function MoviesContent({
           <p className={styles.favoriteText}>Add to Favorites</p>
           <button
             onClick={handleFavoriteToggle}
-            className={`${styles.favoriteButton}`}
+            className={`${styles.favoriteButton} ${animateFavorite ? styles.bounceAnimation : ''}`}
           >
             {isFavorite ? <FavoriteFilledIcon /> : <FavoriteIcon />}
           </button>
