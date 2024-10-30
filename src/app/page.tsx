@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import styles from './Home.module.css';
 import Header from '@/components/layout/Header';
 import HomeHero from '@/components/home/HomeHero';
@@ -8,9 +9,14 @@ import Footer from '@/components/layout/Footer';
 import { fetchMovies, fetchGenres, fetchFavorites } from '@/utils/fetchData';
 
 export default async function Home() {
-  const movies = await fetchMovies();
-  const genres = await fetchGenres();
-  const favorites = await fetchFavorites();
+  const token = (await cookies()).get('token')?.value;
+
+  if (!token) {
+    return <p>No authentication token found.</p>;
+  }
+  const movies = await fetchMovies(token);
+  const genres = await fetchGenres(token);
+  const favorites = await fetchFavorites(token);
 
   const highlightedMovies = movies.filter((movie) => movie.highlighted);
   const currentDate = new Date();
