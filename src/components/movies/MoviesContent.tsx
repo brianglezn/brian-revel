@@ -42,14 +42,13 @@ export default function MoviesContent({
     }
   };
 
-  // Activar animación cuando isFavorite cambia
   useEffect(() => {
-    if (isFavorite !== initialIsFavorite) {
+    if (isFavorite) {
       setAnimateFavorite(true);
       const timer = setTimeout(() => setAnimateFavorite(false), 300);
       return () => clearTimeout(timer);
     }
-  }, [isFavorite, initialIsFavorite]);
+  }, [isFavorite]);
 
   return (
     <section className={styles.movieContent}>
