@@ -21,34 +21,47 @@ export default function MoviesContent({
   const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
   const [animateFavorite, setAnimateFavorite] = useState(false);
 
+  // Función que alterna el estado de favorito para la película
   const handleFavoriteToggle = async () => {
-    try {
-      const url = isFavorite ? `/api/list/${id}` : '/api/list';
-      const method = isFavorite ? 'DELETE' : 'POST';
+    // Calcula el nuevo estado de favorito para reflejarlo visualmente de inmediato
+    const newFavoriteStatus = !isFavorite;
 
+    // Actualiza el estado de favorito y activa la animación de forma inmediata
+    setIsFavorite(newFavoriteStatus);
+    setAnimateFavorite(true);
+
+    try {
+      // Establece el URL de la API interna para añadir o eliminar la película de favoritos
+      const url = newFavoriteStatus ? '/api/list' : `/api/list/${id}`;
+      // Determina el método HTTP en función del nuevo estado de favorito
+      const method = newFavoriteStatus ? 'POST' : 'DELETE';
+
+      // Realiza la solicitud a la API interna para actualizar el estado de favorito
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: isFavorite ? null : JSON.stringify({ id }),
+        body: newFavoriteStatus ? JSON.stringify({ id }) : null,
       });
 
-      if (response.ok) {
-        setIsFavorite(!isFavorite);
-      } else {
+      // Verifica si la solicitud fue exitosa; si no, revierte el cambio visual
+      if (!response.ok) {
+        setIsFavorite(!newFavoriteStatus); 
         console.error('Failed to toggle favorite status');
       }
     } catch (error) {
+      // Captura errores en la solicitud y revierte el estado visual de favorito
+      setIsFavorite(!newFavoriteStatus);
       console.error('Error toggling favorite status:', error);
     }
   };
 
+  // Controla la duración de la animación cada vez que `animateFavorite` está activo
   useEffect(() => {
-    if (isFavorite) {
-      setAnimateFavorite(true);
+    if (animateFavorite) {
       const timer = setTimeout(() => setAnimateFavorite(false), 300);
-      return () => clearTimeout(timer);
+      return () => clearTimeout(timer); // Limpia el temporizador si el componente se desmonta
     }
-  }, [isFavorite]);
+  }, [animateFavorite]);
 
   return (
     <section className={styles.movieContent}>

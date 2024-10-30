@@ -9,10 +9,13 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const router = useRouter();
 
+    // Maneja el envío del formulario de inicio de sesión
     const handleSubmit = async (event: React.FormEvent) => {
+        // Previene el comportamiento predeterminado de recargar la página al enviar el formulario
         event.preventDefault();
 
         try {
+            // Realiza una solicitud POST a la API de autenticación
             const res = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: {
@@ -21,12 +24,15 @@ const LoginForm = () => {
                 body: JSON.stringify({ email, password }),
             });
 
+            // Si la respuesta es exitosa, redirige al usuario a la página principal
             if (res.ok) {
                 router.push('/');
             } else {
+                // Si la respuesta no es exitosa, muestra un mensaje de error en la consola
                 console.error('Error during login:', await res.json());
             }
         } catch (error) {
+            // Muestra cualquier error en la consola si la solicitud falla
             console.error('Error logging in:', error);
         }
     };

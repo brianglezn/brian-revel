@@ -11,10 +11,12 @@ export default function Header() {
   const router = useRouter();
   const pathname = usePathname();
 
+  // Función para alternar el estado de apertura/cierre del sidebar
   const handleSidebarToggle = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  // Función para manejar el logout del usuario y redirigir a la página de inicio de sesión
   const handleLogout = async () => {
     await fetch('/api/auth/logout', {
       method: 'GET',
@@ -22,6 +24,7 @@ export default function Header() {
     router.push('/login');
   };
 
+  // Función para navegar a la página principal
   const navigateHome = () => {
     router.push('/');
   };
@@ -30,9 +33,7 @@ export default function Header() {
     <>
       <header className={styles.header}>
         {pathname !== '/' && (
-          <button onClick={navigateHome} className={styles.homeButton}>
-            Home
-          </button>
+          <button onClick={navigateHome} className={styles.homeButton}>Home</button>
         )}
         <Avatar alt="User Avatar" size="small" onClick={handleSidebarToggle} />
       </header>

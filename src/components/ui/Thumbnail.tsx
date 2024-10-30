@@ -12,17 +12,18 @@ export default function Thumbnail({ thumbnail, title, rating, id }: MovieThumbna
     const [hovered, setHovered] = useState(false);
     const router = useRouter();
 
+    // Función que maneja el clic en el componente para navegar a la página de detalles de la película
     const handleClick = () => {
-        const slug = slugify(title);
-        router.push(`/movies/${slug}?id=${id}`);
+        const slug = slugify(title); // Convierte el título a formato slug para la URL
+        router.push(`/movies/${slug}?id=${id}`); // Navega a la URL de detalles de la película con el slug y el id como query parameter
     };
 
     return (
         <div
-            className={styles.thumbnail}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-            onClick={handleClick}
+            className={styles.thumbnail} // Contenedor principal del thumbnail con sus estilos
+            onMouseEnter={() => setHovered(true)} // Activa el estado "hovered" al pasar el mouse por encima
+            onMouseLeave={() => setHovered(false)} // Desactiva el estado "hovered" al quitar el mouse
+            onClick={handleClick} // Llama a handleClick cuando el usuario hace clic en el thumbnail
         >
             <div className={styles.imageContainer}>
                 <Image

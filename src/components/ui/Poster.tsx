@@ -11,9 +11,10 @@ export default function Poster({ poster, title, availableDate, id }: MoviePoster
     const [hovered, setHovered] = useState(false);
     const router = useRouter();
 
+    // Función para manejar el clic en el póster, navega a la página de detalles de la película
     const handleClick = () => {
-        const slug = slugify(title);
-        router.push(`/movies/${slug}?id=${id}`);
+        const slug = slugify(title); // Convierte el título en un slug amigable para la URL
+        router.push(`/movies/${slug}?id=${id}`); // Navega a la ruta de la película usando el slug y el id
     };
 
     return (

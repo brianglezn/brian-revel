@@ -4,12 +4,13 @@ import { MovieHeroProps } from '@/app/types';
 import styles from './MoviesHero.module.css';
 
 export default function MoviesHero({ poster, isAvailable, availableDate, trailerUrl, playUrl }: MovieHeroProps) {
+
+    // Función para abrir la reproducción de la película/ trailer en una nueva pestaña al hacer clic en el botón de reproducción
   const handleTrailerClick = () => {
     if (trailerUrl) {
       window.open(trailerUrl, '_blank');
     }
   };
-
   const handlePlayClick = () => {
     if (playUrl) {
       window.open(playUrl, '_blank');

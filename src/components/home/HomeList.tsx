@@ -3,17 +3,21 @@ import Carousel from '@/components/ui/Carousel';
 import Thumbnail from '@/components/ui/Thumbnail';
 import { Movie } from '@/app/types';
 
+// Definición de las propiedades esperadas para el componente HomeList
 interface HomeListProps {
     favoriteMovies: Movie[];
 }
 
+// Componente HomeList muestra una lista de películas favoritas en un carrusel si hay películas disponibles
 export default function HomeList({ favoriteMovies }: HomeListProps) {
+    // Verificación rápida para no renderizar el componente si no hay películas en la lista de favoritos
     if (favoriteMovies.length === 0) return null;
 
     return (
         <section className={styles.list}>
             <div className={styles.listContainer}>
                 <h2>Favorite List</h2>
+                
                 <Carousel>
                     {favoriteMovies.map((movie) => (
                         <Thumbnail

@@ -14,16 +14,24 @@ export default async function Home() {
   if (!token) {
     return <p>No authentication token found.</p>;
   }
+
+  // Obtiene la fecha actual para comparar la disponibilidad de las películas
+  const currentDate = new Date();
+
+  // Realiza las solicitudes a la API para obtener películas, géneros y favoritos, usando el token de autenticación
   const movies = await fetchMovies(token);
   const genres = await fetchGenres(token);
   const favorites = await fetchFavorites(token);
 
+  // Filtra las películas destacadas para mostrar en la sección de héroe de la página de inicio
   const highlightedMovies = movies.filter((movie) => movie.highlighted);
-  const currentDate = new Date();
 
+  // Filtra las películas disponibles en función de si la fecha de disponibilidad es anterior o igual a la fecha actual
   const availableMovies = movies.filter(
     (movie) => new Date(movie.availableDate) <= currentDate
   );
+
+  // Filtra las películas próximas, aquellas cuya fecha de disponibilidad es posterior a la fecha actual
   const upcomingMovies = movies.filter(
     (movie) => new Date(movie.availableDate) > currentDate
   );
@@ -31,10 +39,15 @@ export default async function Home() {
   return (
     <div className={styles.homeContainer}>
       <Header />
+
       <HomeHero highlightedMovies={highlightedMovies} />
+
       <HomeGenres genres={genres} availableMovies={availableMovies} />
+
       <HomeSoon upcomingMovies={upcomingMovies} />
+
       <HomeList favoriteMovies={favorites} />
+
       <Footer />
     </div>
   );
