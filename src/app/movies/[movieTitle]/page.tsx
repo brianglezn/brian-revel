@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import Header from '@/components/layout/Header';
-import MoviesHero from '@/app/_movies/MoviesHero';
-import MoviesContent from '@/app/_movies/MoviesContent';
+import MoviesHero from '@/components/movies/MoviesHero';
+import MoviesContent from '@/components/movies/MoviesContent';
 import Footer from '@/components/layout/Footer';
 import { Genre, Movie } from '@/app/types';
 

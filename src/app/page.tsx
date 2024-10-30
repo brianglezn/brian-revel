@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import styles from './Home.module.css';
 import { Movie, Genre } from '@/app/types';
 import Header from '@/components/layout/Header';
-import HomeHero from '@/app/_home/HomeHero';
-import HomeGenres from '@/app/_home/HomeGenres';
-import HomeSoon from '@/app/_home/HomeSoon';
-import HomeList from '@/app/_home/HomeList';
+import HomeHero from '@/components/home/HomeHero';
+import HomeGenres from '@/components/home/HomeGenres';
+import HomeSoon from '@/components/home/HomeSoon';
+import HomeList from '@/components/home/HomeList';
 import Footer from '@/components/layout/Footer';
 
 export default function Home() {
