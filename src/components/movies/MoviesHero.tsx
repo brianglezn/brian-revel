@@ -1,4 +1,4 @@
-import { MovieHeroProps } from '../types';
+import { MovieHeroProps } from '@/app/types';
 import styles from './MoviesHero.module.css';
 
 export default function MoviesHero({ poster, isAvailable, availableDate, trailerUrl, playUrl }: MovieHeroProps) {
