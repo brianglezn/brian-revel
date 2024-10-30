@@ -46,6 +46,7 @@ export type MovieContentProps = {
     description: string;
     trailerUrl: string | null;
     playUrl: string | null;
+    isFavorite: boolean;
 };
 
 // Genre

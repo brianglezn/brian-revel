@@ -1,7 +1,21 @@
+'use client';
+
 import { MovieHeroProps } from '@/app/types';
 import styles from './MoviesHero.module.css';
 
 export default function MoviesHero({ poster, isAvailable, availableDate, trailerUrl, playUrl }: MovieHeroProps) {
+  const handleTrailerClick = () => {
+    if (trailerUrl) {
+      window.open(trailerUrl, '_blank');
+    }
+  };
+
+  const handlePlayClick = () => {
+    if (playUrl) {
+      window.open(playUrl, '_blank');
+    }
+  };
+
   return (
     <section className={styles.movieHero}>
       <div
@@ -16,12 +30,12 @@ export default function MoviesHero({ poster, isAvailable, availableDate, trailer
           )}
           <div className={styles.actions}>
             {trailerUrl && (
-              <button className={styles.trailerButton} onClick={() => window.open(trailerUrl, '_blank')}>
+              <button className={styles.trailerButton} onClick={handleTrailerClick}>
                 Trailer
               </button>
             )}
             {playUrl && (
-              <button className={styles.playButton} onClick={() => window.open(playUrl, '_blank')}>
+              <button className={styles.playButton} onClick={handlePlayClick}>
                 Play
               </button>
             )}

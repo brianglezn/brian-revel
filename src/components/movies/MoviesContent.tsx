@@ -1,139 +1,86 @@
-import { useState, useEffect } from 'react';
+'use client';
+
+import { useState } from 'react';
 import styles from './MoviesContent.module.css';
 import FavoriteIcon from '@/components/icons/FavoriteIcon';
 import FavoriteFilledIcon from '@/components/icons/FavoriteFilledIcon';
 import StarRating from '@/components/ui/StarRating';
 import { MovieContentProps } from '@/app/types';
 
-export default function MoviesContent({ rating, cast, genreName, title, description, trailerUrl, playUrl, id }: MovieContentProps) {
-    const [isFavorite, setIsFavorite] = useState(false);
-    const [animateFavorite, setAnimateFavorite] = useState(false);
+export default function MoviesContent({
+  id,
+  rating,
+  cast,
+  genreName,
+  title,
+  description,
+  trailerUrl,
+  playUrl,
+  isFavorite: initialIsFavorite
+}: MovieContentProps) {
+  const [isFavorite, setIsFavorite] = useState(initialIsFavorite);
 
-    useEffect(() => {
-        const fetchFavorites = async () => {
-            try {
-                const response = await fetch('/api/user', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+  const handleFavoriteToggle = async () => {
+    try {
+      const url = `/api/list/${id}`;
+      const method = isFavorite ? 'DELETE' : 'POST';
 
-                if (response.ok) {
-                    const favoriteMovies = await response.json();
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
 
-                    if (favoriteMovies.some((favId: string) => favId.toLowerCase() === id.toLowerCase())) {
-                        setIsFavorite(true);
-                    } else {
-                        setIsFavorite(false);
-                    }
-                } else {
-                    console.error('Failed to fetch favorite movies');
-                }
-            } catch (error) {
-                console.error('Error fetching favorite movies:', error);
-            }
-        };
+      if (response.ok) {
+        setIsFavorite(!isFavorite);
+      } else {
+        console.error('Failed to toggle favorite status');
+      }
+    } catch (error) {
+      console.error('Error toggling favorite status:', error);
+    }
+  };
 
-        fetchFavorites();
-    }, [id]);
+  return (
+    <section className={styles.movieContent}>
+      <div className={styles.actions}>
+        {trailerUrl && (
+          <button className={styles.trailerButton} onClick={() => window.open(trailerUrl, '_blank')}>
+            Trailer
+          </button>
+        )}
+        {playUrl && (
+          <button className={styles.playButton} onClick={() => window.open(playUrl, '_blank')}>
+            Play
+          </button>
+        )}
+      </div>
 
-    const handleAddToFavorites = async () => {
-        try {
-            const response = await fetch('/api/list', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ id }),
-            });
+      <div className={styles.movieItems}>
+        <div className={styles.detailsSection}>
+          <div className={styles.starRating}>
+            <p><strong>Rating:</strong></p>
+            <StarRating rating={rating} />
+          </div>
+          <p><strong>Cast:</strong> {cast}</p>
+          <p><strong>Genre:</strong> {genreName}</p>
+        </div>
 
-            if (response.ok) {
-                setIsFavorite(true);
-                triggerAnimation();
-            } else {
-                console.error('Failed to add movie to favorites');
-            }
-        } catch (error) {
-            console.error('Error adding movie to favorites:', error);
-        }
-    };
+        <div className={styles.favoriteContainer}>
+          <p className={styles.favoriteText}>Add to Favorites</p>
+          <button
+            onClick={handleFavoriteToggle}
+            className={`${styles.favoriteButton}`}
+          >
+            {isFavorite ? <FavoriteFilledIcon /> : <FavoriteIcon />}
+          </button>
+        </div>
+      </div>
 
-    const handleRemoveFromFavorites = async () => {
-        try {
-            const response = await fetch(`/api/list/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                setIsFavorite(false);
-                triggerAnimation();
-            } else {
-                console.error('Failed to remove movie from favorites');
-            }
-        } catch (error) {
-            console.error('Error removing movie from favorites:', error);
-        }
-    };
-
-    // Función para activar la animación
-    const triggerAnimation = () => {
-        setAnimateFavorite(true);
-        setTimeout(() => setAnimateFavorite(false), 300); // Duración en ms debe coincidir con la animación en CSS
-    };
-
-    return (
-        <section className={styles.movieContent}>
-            <div className={styles.actions}>
-                {trailerUrl && (
-                    <button className={styles.trailerButton} onClick={() => window.open(trailerUrl, '_blank')}>
-                        Trailer
-                    </button>
-                )}
-                {playUrl && (
-                    <button className={styles.playButton} onClick={() => window.open(playUrl, '_blank')}>
-                        Play
-                    </button>
-                )}
-            </div>
-
-            <div className={styles.movieItems}>
-                <div className={styles.detailsSection}>
-                    <div className={styles.starRating}>
-                        <p><strong>Rating:</strong></p>
-                        <StarRating rating={rating} />
-                    </div>
-                    <p><strong>Cast:</strong> {cast}</p>
-                    <p><strong>Genre:</strong> {genreName}</p>
-                </div>
-
-                <div className={styles.favoriteContainer}>
-                    <p className={styles.favoriteText}>Add to Favorites</p>
-                    {isFavorite ? (
-                        <button
-                            onClick={handleRemoveFromFavorites}
-                            className={`${styles.favoriteButton} ${animateFavorite ? styles.bounceAnimation : ''}`}
-                        >
-                            <FavoriteFilledIcon />
-                        </button>
-                    ) : (
-                        <button
-                            onClick={handleAddToFavorites}
-                            className={`${styles.favoriteButton} ${animateFavorite ? styles.bounceAnimation : ''}`}
-                        >
-                            <FavoriteIcon />
-                        </button>
-                    )}
-                </div>
-            </div>
-
-            <div className={styles.titleSection}>
-                <h2>{title}</h2>
-                <p>{description}</p>
-            </div>
-        </section>
-    );
+      <div className={styles.titleSection}>
+        <h2>{title}</h2>
+        <p>{description}</p>
+      </div>
+    </section>
+  );
 }
