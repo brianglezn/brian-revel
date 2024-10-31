@@ -43,6 +43,7 @@ a {
 
 a:hover {
   color: var(--primary-color-light);
+  cursor: pointer;
 }
 
 img {

@@ -26,6 +26,12 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
+.form .signUpText {
+  color: var(--text-color-grey);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .form {
     margin-right: 4rem;
