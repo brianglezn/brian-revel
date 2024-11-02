@@ -11,7 +11,7 @@ interface HomeSoonProps {
 // Componente HomeSoon muestra una sección de películas próximas a estrenarse
 export default function HomeSoon({ upcomingMovies }: HomeSoonProps) {
     return (
-        <section className={styles.soon}>
+        <section className={styles.soon} id='soon'>
             <div className={styles.soonContainer}>
                 <h2>Coming Soon</h2>
 

@@ -14,7 +14,7 @@ export default function HomeList({ favoriteMovies }: HomeListProps) {
     if (favoriteMovies.length === 0) return null;
 
     return (
-        <section className={styles.list}>
+        <section className={styles.list} id='list'>
             <div className={styles.listContainer}>
                 <h2>Favorite List</h2>
                 

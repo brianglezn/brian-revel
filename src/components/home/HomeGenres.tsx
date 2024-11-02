@@ -44,7 +44,7 @@ export default function HomeGenres({ genres, availableMovies }: HomeGenresProps)
     }, [availableMovies, genreMap, selectedGenre]);
 
     return (
-        <section className={styles.genres}>
+        <section className={styles.genres} id='genres'>
             <Carousel>
                 <ul className={styles.genreList}>
                     <li
