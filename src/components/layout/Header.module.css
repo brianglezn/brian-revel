@@ -5,7 +5,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 1rem 3rem;
+    padding: 1rem 2.5rem;
     width: 100%;
     z-index: 1000;
     transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
@@ -65,6 +65,10 @@
 }
 
 @media (max-width: 480px) {
+    .header {
+        padding: 1rem;
+    }
+
     .navMenu {
         display: none;
     }
